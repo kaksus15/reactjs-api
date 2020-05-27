@@ -1,8 +1,9 @@
 import React from "react";
 import BootstrapTable from "react-bootstrap-table-next";
-import { Container, Button } from "reactstrap";
+import { Container, Button, Row, Col } from "reactstrap";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider, { Search } from "react-bootstrap-table2-toolkit";
+import { Link } from "react-router-dom";
 
 const { SearchBar } = Search;
 const columns = [
@@ -35,15 +36,21 @@ const columns = [
     formatter: (rowContent, row) => {
       return (
         <div>
-          <Button color="primary" className="mr-2">
-            Detail
-          </Button>
-          <Button color="primary" className="mr-2">
-            Edit
-          </Button>
-          <Button color="primary" className="mr-2">
-            Delete
-          </Button>
+          <Link to={"detail/" + row.id}>
+            <Button color="primary" className="mr-2">
+              Detail
+            </Button>
+          </Link>
+          <Link to={"edit/" + row.id}>
+            <Button color="primary" className="mr-2">
+              Edit
+            </Button>
+          </Link>
+          <Link to={"delete/" + row.id}>
+            <Button color="primary" className="mr-2">
+              Delete
+            </Button>
+          </Link>
         </div>
       );
     },
@@ -62,9 +69,20 @@ const DatatableComponent = (props) => {
       >
         {(props) => (
           <div>
-            <div className="float-right">
-              <SearchBar {...props.searchProps} placeholder="Goleti ...." />
-            </div>
+            <Row>
+              <Col>
+                <Link to={"/create"}>
+                  <Button color="primary" className="mr-2">
+                    Create
+                  </Button>
+                </Link>
+              </Col>
+              <Col>
+                <div className="float-right">
+                  <SearchBar {...props.searchProps} placeholder="Goleti ...." />
+                </div>
+              </Col>
+            </Row>
             <BootstrapTable
               {...props.baseProps}
               pagination={paginationFactory()}
